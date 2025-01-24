@@ -10,7 +10,7 @@ function make_num(number, positionX) {
             data.forEach((element, j) => {
                 if (element === 1) {
                     matter_data.push(matter.makeBall(j * 22 + width / 2 - 160 + index * 200 + positionX, ((i * 22)) - 300, 14, {
-                        restitution: 0.9,
+                        restitution: 1,
                         timeScale: 1,
                         friction: 0
                     }))
@@ -22,22 +22,23 @@ function make_num(number, positionX) {
 }
 
 setInterval(() => {
-    _hour.push(make_num(nf(hour(),2), -240))
-    _minute.push(make_num(nf(minute(),2), 240))
+    _hour.push(make_num(nf(hour(), 2), -240))
+    _minute.push(make_num(nf(minute(), 2), 240))
 }, 15000);
-
-
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
     matter.init()
     matter.changeGravity(0, 1)
 
-    floor = matter.makeBarrier(width / 2, height + 50, width, 100)
+    floor = matter.makeBarrier(width / 2, height, width, 240)
 }
 
 function draw() {
     background(0)
+
+    fill(0);
+    floor.show();
 
     fill(255)
     noStroke()
@@ -49,5 +50,18 @@ function draw() {
             }
         })
     });
+
+    strokeWeight(10);
+    textSize(28)
+    textFont('Fragment Mono');
+
+    textAlign(LEFT);
+    text(`${hour()}:${nf(minute(), 2)}:${nf(second(), 2)}`, 40, height - 50)
+
+    textAlign(RIGHT);
+    let day_full = (new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date())).toUpperCase()
+    let month_full = (new Intl.DateTimeFormat("en-US", { month: "long" }).format(new Date())).toUpperCase()
+    text(`${month_full} ${day()}, ${day_full}`, width - 40, height - 50)
+
 
 }
