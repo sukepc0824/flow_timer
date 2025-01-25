@@ -22,9 +22,11 @@ function make_num(number, positionX) {
 }
 
 setInterval(() => {
-    _hour.push(make_num(nf(hour(), 2), -240))
-    _minute.push(make_num(nf(minute(), 2), 240))
-}, 15000);
+    if(second()%15===0){
+        _hour.push(make_num(nf(hour(), 2), -240))
+        _minute.push(make_num(nf(minute(), 2), 240))
+    }
+}, 1000);
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
@@ -46,14 +48,19 @@ function draw() {
     _hour.concat(_minute).forEach(element => {
         element.forEach(e => {
             if (0 < e.getX() && e.getX() < width) {
+                matter.mouseInteraction(e)
                 e.show()
+            }else{
+                matter.forget(e)
             }
         })
     });
 
+
     strokeWeight(10);
     textSize(28)
     textFont('Fragment Mono');
+
 
     textAlign(LEFT);
     text(`${hour()}:${nf(minute(), 2)}:${nf(second(), 2)}`, 40, height - 50)
