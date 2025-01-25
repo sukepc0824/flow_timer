@@ -11,7 +11,8 @@ function make_num(number, positionX) {
                 if (element === 1) {
                     matter_data.push(matter.makeBall(j * 22 + width / 2 - 170 + index * 200 + positionX, ((i * 22)) - 300, 14, {
                         restitution: 1,
-                        friction: 0
+                        friction: 0,
+                        timeScale:0.8
                     }))
                 }
             })
@@ -23,6 +24,7 @@ function make_num(number, positionX) {
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
     matter.init()
+    matter.changeGravity(0,2.1)
     floor = matter.makeBarrier(width / 2, height, width, 240)
 }
 
